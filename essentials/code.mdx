@@ -1,37 +1,107 @@
 ---
-title: 'Code Blocks'
-description: 'Display inline code and code blocks'
-icon: 'code'
+title: 'Playpulse Panel Documentation'
+description: 'The official documentation for Playpulse Panel, the ultimate game server hosting control panel.'
 ---
 
-## Basic
+## Home
 
-### Inline Code
+Welcome to the official documentation for Playpulse Panel, the ultimate game server hosting control panel. Playpulse Panel is engineered to provide raw performance and a seamless orchestration experience for managing your game servers. Built with a robust technology stack including Go, PHP, Blade, Shell, TypeScript, and JavaScript, Playpulse Panel offers maximum control with zero lag.
 
-To denote a `word` or `phrase` as code, enclose it in backticks (`).
+This documentation aims to provide comprehensive guides and information for both new and experienced users, covering everything from installation and configuration to advanced usage and API integration. Whether you are setting up your first game server or managing a large-scale hosting environment, this documentation will help you unlock the full potential of Playpulse Panel.
 
-```
-To denote a `word` or `phrase` as code, enclose it in backticks (`).
-```
+## Panel
 
-### Code Block
+### Getting Started
 
-Use [fenced code blocks](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) by enclosing code in three backticks and follow the leading ticks with the programming language of your snippet to get syntax highlighting. Optionally, you can also write the name of your code after the programming language.
+#### Quick Start with Docker (Recommended)
 
-```java HelloWorld.java
-class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}
-```
+For a quick and easy setup, we recommend using Docker. This method streamlines the installation process and ensures all dependencies are correctly configured.
 
-````md
-```java HelloWorld.java
-class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}
-```
-````
+1.  **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/hexlorddev/playpulse-panel.git
+    cd playpulse-panel
+    ```
+
+2.  **Configure environment:**
+
+    ```bash
+    cp .env.example .env
+    ```
+
+    Edit the `.env` file with your specific settings. This file contains crucial configuration variables for your Playpulse Panel instance.
+
+3.  **Launch with Docker Compose:**
+
+    ```bash
+    docker-compose up -d
+    ```
+
+    This command will build and start all necessary services in detached mode.
+
+4.  **Initialize the application:**
+
+    ```bash
+    docker exec -it playpulse-panel php artisan key:generate
+    docker exec -it playpulse-panel php artisan migrate --seed
+    ```
+
+    These commands generate an application key and run database migrations, populating the database with initial data.
+
+5.  **Access your panel:**
+
+    Once the setup is complete, you can access your Playpulse Panel at `http://localhost` in your web browser.
+
+#### Manual Installation
+
+If you prefer a manual installation, ensure your system meets the following requirements:
+
+*   PHP 8.1+
+*   Composer
+*   Node.js 16+ & NPM
+*   MySQL 8.0+ or PostgreSQL 13+
+*   Redis 6.0+
+
+**Installation Steps:**
+
+1.  **Install dependencies:**
+
+    ```bash
+    composer install
+    npm install && npm run build
+    ```
+
+2.  **Configure application:**
+
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    php artisan jwt:secret
+    ```
+
+3.  **Setup database:**
+
+    ```bash
+    php artisan migrate
+    php artisan db:seed
+    ```
+
+4.  **Start services:**
+
+    ```bash
+    php artisan serve
+    php artisan queue:work
+    ```
+
+#### Initial Configuration
+
+After installation, you will need to configure your Playpulse Panel by editing the `.env` file. Below are some essential configuration settings:
+
+**Application Settings:**
+
+```ini
+APP_NAME="PlayPulse"
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://your-domain.com
